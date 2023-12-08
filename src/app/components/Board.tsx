@@ -8,8 +8,8 @@ type GameState = "starting" | "playing" | "won" | "lost";
 const Board = ({maxClicks, board}: {maxClicks: number, board: string[]}) => {
 
     const [boardContent, setBoardContent] = useState<string[]>([]);
-    const [seenCards, setSeenCards] = useState<string[]>([]);
-    const [matchedCards, setMatchedCards] = useState<string[]>([]);
+    const [seenCards, setSeenCards] = useState<number[]>([]);
+    const [matchedCards, setMatchedCards] = useState<number[]>([]);
     const [clicksLeft, setClicksLeft] = useState<number>(maxClicks);
     const [gameState, setGameState] = useState<GameState>("starting");
 
@@ -28,16 +28,19 @@ const Board = ({maxClicks, board}: {maxClicks: number, board: string[]}) => {
         setGameState("playing");
     };
     
-    const handleCardClick = (card: string) => {
-        if (matchedCards.includes(card)) return;
+    const handleCardClick = (cardIndex: number) => {
+        if (seenCards.includes(cardIndex) || matchedCards.includes(cardIndex)) return;
         if (seenCards.length === 1) {
             const firstCard = seenCards[0];
-            if(firstCard === card) {
-                setMatchedCards((state) => [...state, firstCard, card]);
+            const secondCard = cardIndex;
+            if(boardContent[firstCard] === boardContent[secondCard]) {
+                setMatchedCards((state) => [...state, firstCard, secondCard]);
             }
-            setSeenCards([]);
-        } else if(seenCards.length === 0) {
-            setSeenCards([card]);
+            setSeenCards((state) => [...state, cardIndex]);
+        } else if(seenCards.length === 2) {
+            setSeenCards([cardIndex]);
+        } else {
+            setSeenCards((state) => [...state, cardIndex]);
         }
         setClicksLeft((state) => state - 1);
     };
