@@ -12,11 +12,7 @@ const Board = ({maxClicks, board}: {maxClicks: number, board: string[]}) => {
     const [matchedCards, setMatchedCards] = useState<number[]>([]);
     const [clicksLeft, setClicksLeft] = useState<number>(maxClicks);
     const [gameState, setGameState] = useState<GameState>("starting");
-
-    console.log('boardContent : ', boardContent);
-    console.log('matchedCards : ', matchedCards);
-    console.log('seenCards : ', seenCards);
-
+    
     const shuffle = (array: string[]) => {
         return array.sort(() => Math.random() - 0.5);
     }
