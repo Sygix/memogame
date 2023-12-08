@@ -1,3 +1,4 @@
+import Board from "./components/Board";
 import Card from "./components/cards/Card";
 
 export default async function Page({
@@ -8,7 +9,7 @@ export default async function Page({
   
     return (
       <>
-        <Card>💩</Card>
+        <Board></Board>
       </>
     );
   }
