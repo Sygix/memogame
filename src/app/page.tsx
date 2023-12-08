@@ -1,10 +1,6 @@
 import Board from "./components/Board";
 
-export default async function Page({
-    params: { slug },
-  }: {
-    params: { slug: string[]; };
-  }) {
+export default async function Page() {
   
     return (
       <>

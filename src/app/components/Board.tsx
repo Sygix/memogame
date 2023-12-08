@@ -62,7 +62,7 @@ const Board = ({maxClicks, board}: {maxClicks: number, board: string[]}) => {
     }, [boardContent.length, board]);
 
     return (
-        <section className="w-full flex gap-3 md:gap-6 flex-col items-center justify-center">
+        <section className="bg-neutral-900 flex-1 min-h-screen w-full flex gap-3 md:gap-6 flex-col items-center justify-center">
             <h1 className="text-4xl font-bold">Memory Game</h1>
 
             {gameState === 'playing' && <>
