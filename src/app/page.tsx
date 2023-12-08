@@ -9,7 +9,7 @@ export default async function Page({
   
     return (
       <>
-        <Board></Board>
+        <Card>💩</Card>
       </>
     );
   }
