@@ -8,7 +8,7 @@ export default async function Page({
   
     return (
       <>
-        <Board/>
+        <Board board={["🤖", "👽", "👻", "🤡", "🐧", "🦚", "😄", "🚀"]} maxClicks={16*3} />
       </>
     );
   }

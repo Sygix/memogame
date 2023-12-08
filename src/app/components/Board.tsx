@@ -3,18 +3,15 @@
 import { useEffect, useState } from "react";
 import CardList from "./cards/CardList";
 
-const board = ["🤖", "👽", "👻", "🤡", "🐧", "🦚", "😄", "🚀"];
-const maxClicks = 16*3;
+type GameState = "starting" | "playing" | "won" | "lost";
 
-type GameState = "playing" | "won" | "lost";
-
-const Board = () => {
+const Board = ({maxClicks, board}: {maxClicks: number, board: string[]}) => {
 
     const [boardContent, setBoardContent] = useState<string[]>([]);
     const [seenCards, setSeenCards] = useState<string[]>([]);
     const [matchedCards, setMatchedCards] = useState<string[]>([]);
     const [clicksLeft, setClicksLeft] = useState<number>(maxClicks);
-    const [gameState, setGameState] = useState<GameState>("playing");
+    const [gameState, setGameState] = useState<GameState>("starting");
 
     console.log('boardContent : ', boardContent);
     console.log('matchedCards : ', matchedCards);
@@ -50,14 +47,16 @@ const Board = () => {
     }, [clicksLeft])
 
     useEffect(() => {
-        if (matchedCards.length === 16) setGameState("won");
-    }, [matchedCards.length])
+        if (gameState !== 'playing') return;
+        if (matchedCards.length === boardContent.length) setGameState("won");
+    }, [boardContent.length, gameState, matchedCards.length])
 
     useEffect(() => {
         if (boardContent.length === 0) {
             setBoardContent(shuffle([...board, ...board]));
+            setGameState("playing");
         }
-    }, [boardContent.length]);
+    }, [boardContent.length, board]);
 
     return (
         <section className="w-full flex gap-3 md:gap-6 flex-col items-center justify-center">
