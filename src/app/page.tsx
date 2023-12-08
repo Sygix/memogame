@@ -1,3 +1,5 @@
+import Card from "./components/cards/Card";
+
 export default async function Page({
     params: { slug },
   }: {
@@ -6,7 +8,7 @@ export default async function Page({
   
     return (
       <>
-        <h1>dsqdsqd</h1>
+        <Card>💩</Card>
       </>
     );
   }
