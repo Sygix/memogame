@@ -14,7 +14,11 @@ const Board = () => {
     const [seenCards, setSeenCards] = useState<string[]>([]);
     const [matchedCards, setMatchedCards] = useState<string[]>([]);
     const [clicksLeft, setClicksLeft] = useState<number>(maxClicks);
-    const [gameState, setGameState] = useState<GameState>("won");
+    const [gameState, setGameState] = useState<GameState>("playing");
+
+    console.log('boardContent : ', boardContent);
+    console.log('matchedCards : ', matchedCards);
+    console.log('seenCards : ', seenCards);
 
     const shuffle = (array: string[]) => {
         return array.sort(() => Math.random() - 0.5);
@@ -25,7 +29,25 @@ const Board = () => {
         setMatchedCards([]);
         setClicksLeft(maxClicks);
         setGameState("playing");
-    }
+    };
+    
+    const handleCardClick = (card: string) => {
+        console.log(card);
+        if (matchedCards.includes(card)) return;
+        if (seenCards.length === 1) {
+            const firstCard = seenCards[0];
+            
+            console.log(firstCard);
+
+            if(firstCard === card) {
+                setMatchedCards((state) => [...state, card]);
+            }
+            setSeenCards([]);
+        } else if(seenCards.length === 0) {
+            setSeenCards([card]);
+        }
+        setClicksLeft((state) => state - 1);
+    };
 
     useEffect(() => {
         if (clicksLeft <= 0) setGameState('lost');
@@ -47,7 +69,7 @@ const Board = () => {
 
             {gameState === 'playing' && <>
                 <p>Number of clicks left : {clicksLeft}</p>
-                <CardList data={boardContent} seenCards={seenCards} matchedCards={matchedCards} />
+                <CardList data={boardContent} seenCards={seenCards} matchedCards={matchedCards} handleCardClick={handleCardClick} />
             </>}
 
             {(gameState === 'won' || gameState === 'lost') && <>
