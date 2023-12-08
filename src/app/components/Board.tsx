@@ -32,15 +32,11 @@ const Board = () => {
     };
     
     const handleCardClick = (card: string) => {
-        console.log(card);
         if (matchedCards.includes(card)) return;
         if (seenCards.length === 1) {
             const firstCard = seenCards[0];
-            
-            console.log(firstCard);
-
             if(firstCard === card) {
-                setMatchedCards((state) => [...state, card]);
+                setMatchedCards((state) => [...state, firstCard, card]);
             }
             setSeenCards([]);
         } else if(seenCards.length === 0) {
@@ -54,8 +50,8 @@ const Board = () => {
     }, [clicksLeft])
 
     useEffect(() => {
-        if (seenCards.length === 16) setGameState("won");
-    }, [seenCards.length])
+        if (matchedCards.length === 16) setGameState("won");
+    }, [matchedCards.length])
 
     useEffect(() => {
         if (boardContent.length === 0) {
